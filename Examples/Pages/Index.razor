@@ -1,0 +1,88 @@
+﻿@page "/"
+
+<PageTitle>Examples</PageTitle>
+
+<h1>Examples</h1>
+
+<div class="my-5" id="blazorbox">
+    <h4>Good Time Picker</h4>
+
+    <p>Selected Time: @selectedTime</p>
+    <p>Selected TimeSpan: @selectedTimeSpan.ToString()</p>
+
+    <GoodTimePicker StartTime="7:00 AM" EndTime="6:00 PM" @bind-Value="@selectedTime" @bind-SelectedTimeSpan="@selectedTimeSpan" />
+</div>
+
+<div class="my-5" id="blazorbox">
+    <h4>Blazor Box</h4>
+    <BSButton Color="BSColor.Success" @onclick="async() => await _blazorBox.OpenAsync()">Open Blazor Box!</BSButton>
+
+    <BlazorBox @ref="_blazorBox"
+               Size="Size.Medium" Title="@("Blazor Box!")"
+               Message="@("Do you want to?")"
+               CancelLabel="@(new MarkupString("<i class=\"fal fa-times\"></i> Cancel"))"
+               CancelClass="@("btn-danger")"
+               ConfirmLabel="@(new MarkupString("<i class=\"fas fa-check\"></i> Yes"))"
+               Callback="BoxConfirm" />
+</div>
+
+<div class="my-5" id="statesdropdown">
+    <h4>States Drop Down</h4>
+</div>
+
+<div class="my-5" id="timemagetimeselector">
+    <h4>Time Mage Time Selector</h4>
+
+</div>
+
+<div style="margin-top: 20000px;">
+    <Stepper Steps="@(_steps.ToArray())" @ref="_stepper">
+        @if (_stepper.CurrentStep == "Necessity")
+        {
+            <h2>Necessity</h2>
+            <iframe src="TheNecessityofAtheism.pdf" style="width: 80vw; height: 80vh;"></iframe>
+        }
+        @if (_stepper.CurrentStep == "Reason")
+        {
+            <h2>Reason</h2>
+            <iframe src="TheNecessityofAtheism.pdf" style="width: 80vw; height: 80vh;"></iframe>
+        }
+    </Stepper>
+</div>
+
+@code {
+
+    private string selectedTime = "8:00 AM";
+    private TimeSpan selectedTimeSpan;
+
+    private BlazorBox _blazorBox;
+
+
+    private Stepper _stepper;
+    private List<string> _steps = new();
+
+    protected override void OnInitialized()
+    {
+        _steps.Add("Necessity");
+
+        if (_steps.Contains("Necessity") == false)
+        {
+            _steps.Add("Necessity");
+        }
+
+        if (_steps.Contains("Reason") == false)
+        {
+            _steps.Add("Reason");
+        }
+
+        base.OnInitialized();
+    }
+
+    private async Task BoxConfirm(bool hasSaidYes)
+    {
+        if (hasSaidYes)
+        {
+            // The modal will close if any button is clicked.
+        }
+    }
+}
