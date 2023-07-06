@@ -29,12 +29,18 @@
 </div>
 
 <div class="my-5" id="statesdropdown">
-    <h4>States Drop Down</h4>
+    <h4>States/Provinces Drop Down</h4>
+    <StatesDropDown @bind-SelectedState="@_state" />
+    <CanadianProvincesDropDown @bind-SelectedProvince="@_province" />
 </div>
 
-<div class="my-5" id="timemagetimeselector">
+<div class="my-5 container" id="timemagetimeselector">
     <h4>Time Mage Time Selector</h4>
-
+    <form>
+        <div class="form-group">
+            <TimeMageTimeSelector @bind-SelectedTime="_timeSpan"></TimeMageTimeSelector>
+        </div>
+    </form>
 </div>
 
 <div style="margin-top: 20000px;">
@@ -59,9 +65,13 @@
 
     private BlazorBox _blazorBox;
 
-
     private Stepper _stepper;
     private List<string> _steps = new();
+
+    private string _state;
+    private string _province;
+
+    private TimeSpan _timeSpan;
 
     protected override void OnInitialized()
     {
